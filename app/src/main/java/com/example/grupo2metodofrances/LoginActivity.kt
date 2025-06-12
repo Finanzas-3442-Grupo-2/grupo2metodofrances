@@ -5,12 +5,20 @@ import android.os.Bundle
 import android.widget.Button
 import android.widget.TextView
 import android.widget.Toast
+import androidx.activity.compose.setContent
 import androidx.activity.enableEdgeToEdge
 import androidx.appcompat.app.AppCompatActivity
+import androidx.compose.foundation.layout.fillMaxSize
+import androidx.compose.foundation.layout.padding
+import androidx.compose.material3.Scaffold
+import androidx.compose.ui.Modifier
 import androidx.core.view.ViewCompat
 import androidx.core.view.WindowInsetsCompat
 import com.example.grupo2metodofrances.databinding.ActivityLoginBinding
+import com.example.grupo2metodofrances.ui.PaymentPlan
+import com.example.grupo2metodofrances.ui.theme.Grupo2metodofrancesTheme
 import com.google.firebase.auth.FirebaseAuth
+import com.grupo2metodofrances.PlanActivity
 
 class LoginActivity : AppCompatActivity() {
 
@@ -47,8 +55,18 @@ class LoginActivity : AppCompatActivity() {
                         Toast.makeText(this, "Inicio de sesión correcto", Toast.LENGTH_SHORT).show()
 
                         // ✅ Aquí va tu lógica para el click de ingresar
-                        val intent1 = Intent(this, PlanActivity::class.java)
-                        startActivity(intent1)
+                        setContent {
+                            Grupo2metodofrancesTheme {
+                                Scaffold(modifier = Modifier.fillMaxSize()) { innerPadding ->
+                                    PaymentPlan(
+                                        _tep = 4.4030651,
+                                        _capital = 1440000.00,
+                                        _term = 8,
+                                        modifier = Modifier.padding(innerPadding)
+                                    )
+                                }
+                            }
+                        }
 
                     } else {
                         Toast.makeText(this, it.exception.toString(), Toast.LENGTH_SHORT).show()
